@@ -21,7 +21,7 @@ app.use(
 );
 
 // Connexion route
-app.post("signin", (req, res) => {
+app.post("/signin", (req, res) => {
   const { username, password } = req.body;
   const user = users.find(
     (user) => user.username === username && user.password === password
