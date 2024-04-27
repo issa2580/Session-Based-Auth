@@ -15,7 +15,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 3,
+      maxAge: 60 * 24,
     },
   })
 );
@@ -31,6 +31,15 @@ app.post("signin", (req, res) => {
     res.send("Login successfully");
   } else {
     res.status(401).send("Invalid credentials");
+  }
+});
+
+// Protected route
+app.get("/home", (req, res) => {
+  if (req.session.userId) {
+    res.send("Welcome " + req.session.userId);
+  } else {
+    res.status(401).send("Please sign in");
   }
 });
 
