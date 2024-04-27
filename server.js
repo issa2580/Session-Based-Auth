@@ -1,11 +1,27 @@
 const express = require("express");
 const session = require("express-session");
+const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+// Database connection
+const URL = process.env.MONGODB_URL;
+mongoose
+  .connect(URL, {
+    /*
+        useFindAndModify: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useNewUrlParser: true,
+    */
+  })
+  .then(() => console.log("connection successful"))
+  .catch((err) => console.log("connection failed"));
 
 // Middleware setup
 app.use(
