@@ -1,27 +1,14 @@
 const express = require("express");
 const session = require("express-session");
-const mongoose = require("mongoose");
-require("dotenv").config();
+const users = require("./data.js");
+
 const app = express();
-const port = process.env.PORT || 5000;
+app.use(express.json());
+const port = 5000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-// Database connection
-const URL = process.env.MONGODB_URL;
-mongoose
-  .connect(URL, {
-    /*
-        useFindAndModify: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useNewUrlParser: true,
-    */
-  })
-  .then(() => console.log("connection successful"))
-  .catch((err) => console.log("connection failed"));
 
 // Middleware setup
 app.use(
@@ -40,7 +27,7 @@ app.use(
 app.post("/signin", (req, res) => {
   const { username, password } = req.body;
   const user = users.find(
-    (user) => user.username === username && user.password === password
+    (u) => u.username === username && u.password === password
   );
   if (user) {
     req.session.userId = user.id;
