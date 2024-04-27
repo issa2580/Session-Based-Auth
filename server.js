@@ -43,6 +43,17 @@ app.get("/home", (req, res) => {
   }
 });
 
+// Logout route
+app.get("/signout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(500).send("Error while logging out");
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log("Server is running on port " + port);
 });
